@@ -1,0 +1,11 @@
+{
+  "resolution": "main",
+  "tree": {
+    "src": "https://raw.githubusercontent.com/goenning/typed-generic-pool/b4170bc80dae5cddda5568d2f35d6a39ce2d5bf0/typings.json",
+    "raw": "github:goenning/typed-generic-pool#b4170bc80dae5cddda5568d2f35d6a39ce2d5bf0",
+    "main": "index.d.ts",
+    "global": false,
+    "name": "generic-pool",
+    "type": "typings"
+  }
+}

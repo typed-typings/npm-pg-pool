@@ -1,0 +1,24 @@
+{
+	"compilerOptions": {
+		"target": "es5",
+		"noEmit": true
+	},
+	"filesGlob": [
+		"typings/index.d.ts",
+		"index.d.ts",
+		"tests/*.ts"
+	],
+	"files": [
+		"typings/index.d.ts",
+		"index.d.ts",
+		"tests/pool.ts"
+	],
+	"formatCodeOptions": {
+		"indentSize": 2,
+		"tabSize": 2
+	},
+	"atom": {
+		"rewriteTsconfig": true,
+		"formatOnSave": true
+	}
+}

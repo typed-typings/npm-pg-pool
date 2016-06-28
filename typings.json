@@ -1,0 +1,24 @@
+{
+  "name": "pg-pool",
+  "main": "index.d.ts",
+  "author": "goenning <oenning.ti@gmail.com>",
+  "keywords": [
+    "TypeScript",
+    "typings",
+    "pg",
+    "node-postgres",
+    "postgres",
+    "pool"
+  ],
+  "description": "The TypeScript definition for node-pg-pool (brianc/node-postgres)",
+  "url": "https://github.com/goenning/typed-pg/",
+  "license": "MIT",
+  "dependencies": {
+    "es6-promise": "registry:npm/es6-promise#3.0.0+20160211003958",
+    "generic-pool": "github:goenning/typed-generic-pool#b4170bc80dae5cddda5568d2f35d6a39ce2d5bf0"
+  },
+  "devDependencies": {},
+  "globalDependencies": {
+    "node": "registry:dt/node#4.0.0+20160330064709"
+  }
+}
