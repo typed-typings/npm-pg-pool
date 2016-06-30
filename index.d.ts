@@ -105,7 +105,7 @@ interface Client extends EventEmitter {
   on(event: string, listener: Function): this;
 }
 
-export default class Pool extends EventEmitter {
+export = class Pool extends EventEmitter {
   constructor(options: PoolOptions, Client?: new (connection: string | Config) => Client);
   connect(cb: ConnectCallback): Promise<Client>;
   take(cb: ConnectCallback): Promise<Client>;
