@@ -1,4 +1,4 @@
-import Pool from "../index.d"
+import Pool = require("../index.d");
 
 class Client {
   constructor(connString: string);
