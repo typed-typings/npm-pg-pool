@@ -5,13 +5,13 @@ import { TlsOptions } from "tls"
 import { Promise } from "es6-promise"
 
 declare class PgPool extends EventEmitter {
-  constructor(options: PgPool.PoolOptions, Client?: new (connection: string | PgPool.Config) => PgPool.Client);
+  constructor(options: PgPool.PoolOptions, Client?: PgPool.ClientConstructor);
   connect(cb?: PgPool.ConnectCallback): Promise<PgPool.Client>;
-  take(cb: PgPool.ConnectCallback): Promise<PgPool.Client>;
+  take(cb?: PgPool.ConnectCallback): Promise<PgPool.Client>;
   query(query: PgPool.QueryConfig, callback?: PgPool.QueryCallback): Promise<PgPool.ResultSet>;
-  query(text: string, callback: PgPool.QueryCallback): Promise<PgPool.ResultSet>;
-  query(text: string, values: any[], callback: PgPool.QueryCallback): Promise<PgPool.ResultSet>;
-  end(cb: PgPool.Done): Promise<void>;
+  query(text: string, callback?: PgPool.QueryCallback): Promise<PgPool.ResultSet>;
+  query(text: string, values: any[], callback?: PgPool.QueryCallback): Promise<PgPool.ResultSet>;
+  end(cb: PgPool.DoneCallback): Promise<void>;
 
   on(event: "connect", listener: (client: PgPool.Client) => void): this;
   on(event: "acquire", listener: (client: PgPool.Client) => void): this;
@@ -21,21 +21,15 @@ declare class PgPool extends EventEmitter {
 
 declare namespace PgPool {
 
-  export interface QueryCallback {
-    (err: Error, result: ResultSet): void;
-  }
+  export type ClientConstructor = new (connection: string | PgPool.Config) => PgPool.Client;
 
-  export interface ClientConnectCallback {
-    (err: Error, client: Client): void;
-  }
+  export type QueryCallback = (err: Error, result: ResultSet) => void;
 
-  export interface ConnectCallback {
-    (err: Error, client: Client, done: Done): void;
-  }
+  export type ClientConnectCallback = (err: Error, client: Client) => void;
 
-  export interface Done {
-    (): void;
-  }
+  export type ConnectCallback = (err: Error, client: Client, done: DoneCallback) => void;
+
+  export type DoneCallback = () => void;
 
   export interface ResultSet {
     rows: any[];

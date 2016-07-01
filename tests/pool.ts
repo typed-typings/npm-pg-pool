@@ -1,24 +1,28 @@
-import Pool = require("../index.d");
+import PgPool = require("../index.d");
 
-class Client {
-  constructor(connString: string);
-  constructor(config: Config);
-}
+var Options: PgPool.PoolOptions;
+var ClientConstructor: PgPool.ClientConstructor;
 
-var Options = {
-  host: '',
-  user: '',
-  database: '',
-  password: '',
-  port: 0,
-  min: 0,
-  max: 0,
-  idleTimeoutMillis: 0
-}
-var cPool: Pool;
-cPool = new Pool(Options);
-cPool = new Pool(Options, Client);
+var Pool: PgPool;
+Pool = new PgPool(Options);
+Pool = new PgPool(Options, ClientConstructor);
 
-cPool.connect((err: Error, client: Client, done: () => void) => { });
-cPool.take((err: Error, client: Client, done: () => void) => { });
-cPool.query('', () => { }).then(() => { });
+var ConnectCallback: PgPool.ConnectCallback;
+Pool.connect().then((Client: PgPool.Client) => { });
+Pool.connect(ConnectCallback).then((Client: PgPool.Client) => { });
+Pool.take().then((Client: PgPool.Client) => { });
+Pool.take(ConnectCallback).then((Client: PgPool.Client) => { });
+
+var QueryCallback: PgPool.QueryCallback;
+var QueryConfig: PgPool.QueryConfig;
+Pool.query(QueryConfig).then((Result: PgPool.ResultSet) => { });
+Pool.query(QueryConfig, QueryCallback).then((Result: PgPool.ResultSet) => { });
+Pool.query('').then((Result: PgPool.ResultSet) => { });
+Pool.query('', QueryCallback).then((Result: PgPool.ResultSet) => { });
+Pool.query('', []).then((Result: PgPool.ResultSet) => { });
+Pool.query('', [], QueryCallback).then((Result: PgPool.ResultSet) => { });
+
+var DoneCallback: PgPool.DoneCallback;
+Pool.end(DoneCallback).then((X: void) => { });
+
+Pool = Pool.on('', () => { });
