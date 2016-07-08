@@ -16,7 +16,7 @@
   "dependencies": {
     "es6-promise": "registry:npm/es6-promise#3.0.0+20160211003958",
     "generic-pool": "github:goenning/typed-generic-pool#b4170bc80dae5cddda5568d2f35d6a39ce2d5bf0",
-    "pg": "github:typed-typings/typed-pg#7923899b5d2eebcaf21873f446084c15836848fb"
+    "pg": "github:typed-typings/typed-pg#16a8cbcb0c9c533032a2dc55914b81b62085b48e"
   },
   "devDependencies": {},
   "globalDependencies": {

@@ -6,13 +6,13 @@ import { Promise } from "es6-promise"
 import * as pg from "pg"
 
 declare class PgPool extends EventEmitter {
-  constructor(options: PgPool.PoolOptions, Client?: new (connection: string | pg.Config) => pg.Client);
+  constructor(options: PgPool.PoolOptions, Client?: pg.ClientConstructor);
   connect(cb?: pg.ConnectCallback): Promise<pg.Client>;
   take(cb?: pg.ConnectCallback): Promise<pg.Client>;
   query(query: pg.QueryConfig, callback?: pg.QueryCallback): Promise<pg.ResultSet>;
   query(text: string, callback?: pg.QueryCallback): Promise<pg.ResultSet>;
   query(text: string, values: any[], callback?: pg.QueryCallback): Promise<pg.ResultSet>;
-  end(cb: pg.Done): Promise<void>;
+  end(cb: pg.DoneCallback): Promise<void>;
 
   on(event: "connect", listener: (client: pg.Client) => void): this;
   on(event: "acquire", listener: (client: pg.Client) => void): this;
