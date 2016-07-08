@@ -3,62 +3,24 @@ import { Writable, Readable } from "stream"
 import { Pool as GenericPool } from "generic-pool"
 import { TlsOptions } from "tls"
 import { Promise } from "es6-promise"
+import * as pg from "pg"
 
 declare class PgPool extends EventEmitter {
-  constructor(options: PgPool.PoolOptions, Client?: PgPool.ClientConstructor);
-  connect(cb?: PgPool.ConnectCallback): Promise<PgPool.Client>;
-  take(cb?: PgPool.ConnectCallback): Promise<PgPool.Client>;
-  query(query: PgPool.QueryConfig, callback?: PgPool.QueryCallback): Promise<PgPool.ResultSet>;
-  query(text: string, callback?: PgPool.QueryCallback): Promise<PgPool.ResultSet>;
-  query(text: string, values: any[], callback?: PgPool.QueryCallback): Promise<PgPool.ResultSet>;
-  end(cb: PgPool.DoneCallback): Promise<void>;
+  constructor(options: PgPool.PoolOptions, Client?: new (connection: string | pg.Config) => pg.Client);
+  connect(cb?: pg.ConnectCallback): Promise<pg.Client>;
+  take(cb?: pg.ConnectCallback): Promise<pg.Client>;
+  query(query: pg.QueryConfig, callback?: pg.QueryCallback): Promise<pg.ResultSet>;
+  query(text: string, callback?: pg.QueryCallback): Promise<pg.ResultSet>;
+  query(text: string, values: any[], callback?: pg.QueryCallback): Promise<pg.ResultSet>;
+  end(cb: pg.Done): Promise<void>;
 
-  on(event: "connect", listener: (client: PgPool.Client) => void): this;
-  on(event: "acquire", listener: (client: PgPool.Client) => void): this;
+  on(event: "connect", listener: (client: pg.Client) => void): this;
+  on(event: "acquire", listener: (client: pg.Client) => void): this;
   on(event: "error", listener: (err: Error) => void): this;
   on(event: string, listener: Function): this;
 }
 
 declare namespace PgPool {
-
-  export type ClientConstructor = new (connection: string | PgPool.Config) => PgPool.Client;
-
-  export type QueryCallback = (err: Error, result: ResultSet) => void;
-
-  export type ClientConnectCallback = (err: Error, client: Client) => void;
-
-  export type ConnectCallback = (err: Error, client: Client, done: DoneCallback) => void;
-
-  export type DoneCallback = () => void;
-
-  export interface ResultSet {
-    rows: any[];
-  }
-
-  export interface QueryConfig {
-    name?: string;
-    text: string;
-    values?: any[];
-  }
-
-  export interface Config {
-    host?: string;
-    user?: string;
-    database?: string;
-    password?: string;
-    port?: number;
-    poolSize?: number;
-    rows?: number;
-    binary?: boolean;
-    poolIdleTimeout?: number;
-    reapIntervalMillis?: number;
-    poolLog?: boolean;
-    client_encoding?: string;
-    ssl?: TlsOptions;
-    application_name?: string;
-    fallback_application_name?: string;
-    parseInputDatesAsUTC?: boolean;
-  }
 
   export interface PoolOptions {
     host?: string;
@@ -70,66 +32,6 @@ declare namespace PgPool {
     max?: number;
     idleTimeoutMillis?: number;
   }
-
-  export interface ResultBuilder {
-    command: string;
-    rowCount: number;
-    oid: number;
-    rows: any[];
-    addRow(row: any): void;
-  }
-
-  export interface Query extends EventEmitter, Promise<ResultSet> {
-    text: string;
-    values: any[];
-
-    on(event: "row", listener: (row: any, result: ResultBuilder) => void): this;
-    on(event: "end", listener: (result: ResultBuilder) => void): this;
-    on(event: "error", listener: (err: Error) => void): this;
-    on(event: string, listener: Function): this;
-  }
-
-  export interface Client extends EventEmitter {
-    user: string;
-    database: string;
-    port: string;
-    host: string;
-    password: string;
-    binary: boolean;
-    encoding: string;
-    ssl: boolean;
-
-    connect(callback?: ClientConnectCallback): void;
-
-    getStartupConf(): Config;
-
-    cancel(client: Client, query: Query): void;
-
-    setTypeParser(oid: any, format: any, parseFn: any): any; // TODO
-    getTypeParser(oid: any, format: any): any; // TODO
-
-    escapeIdentifier(str: string): string;
-    escapeLiteral(str: string): string;
-
-    copyFrom(text: string): any // TODO
-    copyTo(text: string): any // TODO
-
-    query(query: QueryConfig, callback?: QueryCallback): Promise<ResultSet>;
-    query(text: string, callback?: QueryCallback): Promise<ResultSet>;
-    query(text: string, values: any[], callback?: QueryCallback): Promise<ResultSet>;
-
-    end(): void;
-    md5(str: string): string;
-
-    release(err?: Error): Promise<Client>
-
-    on(event: "drain", listener: () => void): this;
-    on(event: "error", listener: (err: Error) => void): this;
-    on(event: "notification", listener: (message: any) => void): this;
-    on(event: "notice", listener: (message: any) => void): this;
-    on(event: string, listener: Function): this;
-  }
-
 }
 
 export = PgPool;
