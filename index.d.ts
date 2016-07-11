@@ -2,8 +2,8 @@ import { EventEmitter } from 'events';
 import { Promise } from 'es6-promise';
 import * as pg from 'pg';
 
-declare class PgPool extends EventEmitter {
-  constructor(options: PgPool.PoolOptions, Client?: pg.ClientConstructor);
+declare class Pool extends EventEmitter {
+  constructor(options: Pool.PoolOptions, Client?: pg.ClientConstructor);
   connect(cb?: pg.ConnectCallback): Promise<pg.Client>;
   take(cb?: pg.ConnectCallback): Promise<pg.Client>;
   query(query: pg.QueryConfig, callback?: pg.QueryCallback): Promise<pg.ResultSet>;
@@ -17,7 +17,7 @@ declare class PgPool extends EventEmitter {
   on(event: string, listener: Function): this;
 }
 
-declare namespace PgPool {
+declare namespace Pool {
 
   export interface PoolOptions {
     host?: string;
@@ -31,4 +31,4 @@ declare namespace PgPool {
   }
 }
 
-export = PgPool;
+export = Pool;
