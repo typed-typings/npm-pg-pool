@@ -18,7 +18,7 @@
     "generic-pool": "github:goenning/typed-generic-pool#b4170bc80dae5cddda5568d2f35d6a39ce2d5bf0"
   },
   "peerDependencies": {
-    "pg": "github:typed-typings/typed-pg#044cc7f7e4c1ed67319feaea6e5b62db8e41c2f7"
+    "pg": "github:typed-typings/typed-pg#7e1518cf1053321fc117ba91fa55b05aac626937"
   },
   "globalDependencies": {
     "node": "registry:dt/node#4.0.0+20160330064709"
