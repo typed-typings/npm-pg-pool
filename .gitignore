@@ -1,2 +1,3 @@
-/typings
-/*.log
+typings
+*.log
+node_modules

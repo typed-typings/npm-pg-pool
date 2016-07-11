@@ -1,12 +1,12 @@
-import Pool = require("../index.d");
+import Pool = require('../index.d');
 
-var pool = new Pool({
+const pool = new Pool({
   user: 'foo',
   password: 'bar',
   host: 'localhost',
   database: 'my_db',
   max: 10, // max number of clients in pool
-  idleTimeoutMillis: 1000, // close & remove clients which have been idle > 1 second
+  idleTimeoutMillis: 1000 // close & remove clients which have been idle > 1 second
 });
 
 pool.on('error', function(e, client) {
@@ -30,7 +30,7 @@ pool.query('SELECT $1::text as name', ['foo'])
 pool.connect(function(err, client, release) {
   // TODO - you'll want to handle the error in real code
 
-  client.query('SELECT $1::text as name', ['foo'], function(err, result) {
+  client.query('SELECT $1::text as name', ['foo'], function(queryErr, result) {
     // you MUST return your client back to the pool when you're done!
     release();
     console.log(result.rows[0].name); // output: foo

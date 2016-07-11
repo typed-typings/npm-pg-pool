@@ -1,9 +1,6 @@
-import { EventEmitter } from "events"
-import { Writable, Readable } from "stream"
-import { Pool as GenericPool } from "generic-pool"
-import { TlsOptions } from "tls"
-import { Promise } from "es6-promise"
-import * as pg from "pg"
+import { EventEmitter } from 'events';
+import { Promise } from 'es6-promise';
+import * as pg from 'pg';
 
 declare class PgPool extends EventEmitter {
   constructor(options: PgPool.PoolOptions, Client?: pg.ClientConstructor);
